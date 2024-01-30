@@ -1,10 +1,16 @@
-import LinkedList from './lib/LinkedList';
+import HashMap from './lib/HashMap';
 
-const list = new LinkedList();
+const map = new HashMap<number>();
+map.insert('aaah', 22);
+map.insert('Lol', 56);
+map.insert('Dota', 72);
+map.insert('WoW', 91);
 
-for (let i = 0; i < 50; i++) {
-	list.push(Math.floor(Math.random() * 100));
-}
+console.log(map.get('aaah'));
+console.log(map.get('Lol'));
+console.log(map.get('Dota'));
+console.log(map.get('WoW'));
 
-console.log(list.toString());
-console.log(list.getElementAt(4)?.value);
+map.remove('WoW');
+
+console.log(map.get('WoW'));

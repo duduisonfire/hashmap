@@ -13,6 +13,7 @@ export default class LinkedList<T> {
 
 		if (!this.head) {
 			this.head = node;
+			this.count++;
 			return;
 		}
 
