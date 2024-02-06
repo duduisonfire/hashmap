@@ -17,10 +17,10 @@ export default class HashMap<T> {
 		return Math.abs(hash % this.size);
 	}
 
-	private iterateInList(key: string) {
-		if (!this.list[this.hash(key)]) return undefined;
+	private iterateInList(key: string, hash: number) {
+		if (!this.list[hash]) return undefined;
 
-		let actual = this.list[this.hash(key)].getHead();
+		let actual = this.list[hash].getHead();
 
 		while (actual?.value.key !== key && actual?.value.value != null) {
 			actual = actual?.next;
@@ -36,7 +36,7 @@ export default class HashMap<T> {
 			this.list[index] = new LinkedList();
 		}
 
-		const findEquals = this.iterateInList(key);
+		const findEquals = this.iterateInList(key, index);
 
 		if (!findEquals) {
 			this.list[index].push({ key, value });
@@ -44,9 +44,11 @@ export default class HashMap<T> {
 	}
 
 	get(key: string): number | T {
-		if (!this.list[this.hash(key)]) return -1;
+		const hash = this.hash(key);
 
-		let actual = this.iterateInList(key);
+		if (!this.list[hash]) return -1;
+
+		let actual = this.iterateInList(key, hash);
 
 		return actual ? actual!.value.value : -1;
 	}
@@ -56,7 +58,7 @@ export default class HashMap<T> {
 		if (!this.list[hash]) return -1;
 
 		const list = this.list[hash];
-		const element = this.iterateInList(key);
+		const element = this.iterateInList(key, hash);
 		const output = list.remove(element!.value);
 
 		return output!.value;
